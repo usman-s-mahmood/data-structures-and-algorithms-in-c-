@@ -88,6 +88,14 @@ T MyLinkedList<T>::deleteAtHead()
         cout<<"Empty linked list has not values for deletion!"<<endl;
         return -1;
     }
+    if (this->head->next == nullptr && this->tail->next == nullptr)
+    {
+        T value = this->head->data;
+        delete this->head;
+        this->head = nullptr;
+        this->tail = nullptr;
+        return value;
+    }
     T value = this->head->data;
     struct Node<T> *ptr = this->head;
     this->head = ptr->next;
@@ -354,33 +362,42 @@ void MyLinkedList<T>::merge(MyLinkedList<T> list)
     if (this->isEmpty() && list.isEmpty())
     {
         cout << "Invalid Operation!" << endl;
-        return ;
+        return;
     }
+
     int s1 = this->size();
     int s2 = list.size();
-    const int sz = s1+s2;
-    cout << sz << endl;
-    int *arr = new int[sz];
-    for (int i = 0; i < this->size(); i++)
+    const int sz = s1 + s2;
+
+    T *arr = new T[sz];
+
+    for (int i = 0; i < s1; i++)
         arr[i] = this->peekPos(i);
     for (int i = 0; i < s2; i++) 
         arr[s1 + i] = list.peekPos(i);
-    for (int i = 0; i < sz; i++)
-        cout << arr[i] << ' ';
-    T temp;
-    for (int i = 0; i < sz; i++)
+
+    for (int i = 0; i < sz - 1; i++)
+    {
         for (int j = i + 1; j < sz; j++)
-            if (arr[i] < arr[j])
+        {
+            if (arr[i] > arr[j])
             {
-                temp = arr[i];
+                T temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
+        }
+    }
+
+
     while (!this->isEmpty())
         this->deleteAtHead();
+
     for (int i = 0; i < sz; i++)
         this->insertAtTail(arr[i]);
+
+    cout << "Merged and sorted list: ";
     this->display();
-    delete [] arr;
-    return ;
+
+    delete[] arr;
 }
