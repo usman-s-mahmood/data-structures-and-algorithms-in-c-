@@ -9,5 +9,6 @@ int main()
     obj.insert(21);
     obj.insert(30);
     obj.arrayFun();
+    obj.search(0);
     return 0;
 }

@@ -9,6 +9,7 @@ class BinarySearchTree: public Tree<T>
         void postOrderPro(struct Node<T> *root);
         void tree_size(struct Node<T> *root, T &ref);
         void convert_to_array(struct Node<T> *root, T *arr, int &itr);
+        void search_pro(struct Node<T> *root, bool &check, T value);
     public:
         BinarySearchTree();
         void insert(T);
@@ -18,6 +19,8 @@ class BinarySearchTree: public Tree<T>
         bool isEmpty();
         T pop_inorder();
         void arrayFun();
+        bool deleteNode(T);
+        bool search(T);
         ~BinarySearchTree(){}
 };
 
@@ -175,6 +178,57 @@ void BinarySearchTree<T>::arrayFun()
     cout << endl;
     // done to perfection with all the algorithm working fine as expected!
 }
+
+template <class T>
+void BinarySearchTree<T>::search_pro(struct Node<T> *root, bool &check, T value)
+{
+    if (root != nullptr)
+    {
+        search_pro(root->left, check, value);
+        if (root->data == value)
+        {
+            check = true;
+            return ;
+        }
+        search_pro(root->right, check, value);
+    }
+}
+
+template <class T>
+bool BinarySearchTree<T>::search(T value)
+{
+    if (isEmpty())
+    {
+        cout << "Invalid Operation! Tree is empty" << endl;
+        return false;
+    }
+    bool check = false;
+    search_pro(this->root, check, value);
+    if (check)
+    {
+        cout << "Value found in the tree" << endl;
+        return true;
+    }
+    cout << "Value is not present in the tree" << endl;
+    return false;
+}
+
+template <class T>
+bool BinarySearchTree<T>::deleteNode(T value)
+{
+    if (!isEmpty())
+    {
+        if (search(value))
+        {
+            // leaf node case
+            // node with one child case
+            // node with two children case
+        }
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return false;
+}
+
 /*
 template <class T>
 void BinarySearchTree<T>::insert(T value)
