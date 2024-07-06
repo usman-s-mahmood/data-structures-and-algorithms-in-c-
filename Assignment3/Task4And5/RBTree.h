@@ -668,6 +668,11 @@ T RBTree<T>::parentNode(T value)
     {
         if (search(value))
         {
+            if (this->root->data == value)
+            {
+                cout << value << " belongs to root node and root doesnot have a parent!" << endl;
+                return T();
+            }
             T parent_value = T();
             parent_node_pro(this->root, value, parent_value);
             cout << "Parent of " << value << " is: " << parent_value << endl;

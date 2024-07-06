@@ -14,6 +14,7 @@ class BinarySearchTree: public Tree<T>
         T max_value_pro(struct Node<T> *root);
         T min_value_pro(struct Node<T> *root);
         void parent_node_pro(struct Node<T> *root, T value, T &parent_value);
+        void pre_order_array(struct Node<T> *root, T *arr, int &itr);
     public:
         BinarySearchTree();
         void insert(T);
@@ -30,6 +31,8 @@ class BinarySearchTree: public Tree<T>
         T maxValue();
         T minValue();
         T parentNode(T);
+        int size_of_tree();
+        void compare_pre_order_array(T *arr);
         ~BinarySearchTree(){}
 };
 
@@ -390,4 +393,58 @@ T BinarySearchTree<T>::parentNode(T value)
     }
     cout << "Invalid Operation! Tree is empty" << endl;
     return T();
+}
+
+template <class T>
+int BinarySearchTree<T>::size_of_tree()
+{
+    if (!isEmpty())
+    {
+        int size = 0;
+        tree_size(this->root, size);
+        cout << "Size of tree is: " << size << endl;
+        return size;
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return 0;
+}
+
+template <class T>
+void BinarySearchTree<T>::pre_order_array(struct Node<T> *root, T *arr, int &itr)
+{
+    if (root != nullptr)
+    {
+        arr[itr] = root->data;
+        itr++;
+        pre_order_array(root->left, arr, itr);
+        pre_order_array(root->right, arr, itr);
+    }
+}
+
+template <class T>
+void BinarySearchTree<T>::compare_pre_order_array(T *arr)
+{
+    if (!isEmpty())
+    {
+        int size = 0,
+            itr = 0;
+        tree_size(this->root, size);
+        int pre_order_arr[size] = {0};
+        this->pre_order_array(this->root, pre_order_arr, itr);
+        bool flag = true;
+        for (int i = 0; i < size; i++)
+            if (arr[i] != pre_order_arr[i])
+                flag = false;
+        if (flag)
+            cout << "Sequence is correct!" << endl;
+        else
+            cout << "Your given sequence does not match the pre order of this Binary search tree" << endl;
+        cout << "Correct pre order sequence of tree" << endl;
+        for (int i = 0; i < size; i++)
+            cout << pre_order_arr[i] << ' ';
+        cout << endl;
+        return ;
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return ;
 }
