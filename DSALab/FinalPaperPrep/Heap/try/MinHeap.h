@@ -68,10 +68,26 @@ T MinHeap<T>::deleteValue()
         for (int i = 0; i < this->size; i++)
             if (this->arr[i] < value)
                 value = this->arr[i];
-        for (int i = 0; i < this->size; i++)
-            if (this->arr[i] == value)
+        // cout << "Least value is: " << value << endl;
+        int itr = 0, temp_itr = 0;
+        for (itr; itr < this->size; itr++)
+        {
+            if (this->arr[itr] == value)
                 break;
-        
+            temp[temp_itr] = this->arr[itr];
+            temp_itr++;
+        }
+        while (itr < this->size)
+        {
+            itr++;
+            temp[temp_itr] = this->arr[itr];
+            temp_itr++;
+            if (itr == this->size - 1)
+                break;
+        }
+        for (int i = 0; i < this->size - 1; i++)
+            this->arr[i] = temp[i];
+        this->size--;
         return value;
     }
     cout << "Invalid Operation! Heap is empty" << endl;
@@ -86,5 +102,5 @@ MinHeap<T>::MinHeap(int capacity):
 template <class T>
 MinHeap<T>::~MinHeap()
 {
-    Heap<T>::~Heap();
+    // Heap<T>::~Heap();
 }
