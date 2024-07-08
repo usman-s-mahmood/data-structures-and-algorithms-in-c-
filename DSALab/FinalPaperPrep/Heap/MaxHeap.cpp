@@ -97,10 +97,12 @@ int main() {
 
     maxHeap.printHeap();
 
-    cout << "Extracted max: " << maxHeap.extractMax() << endl;
-    maxHeap.printHeap();
+    // cout << "Extracted max: " << maxHeap.extractMax() << endl;
+    // maxHeap.printHeap();
 
-    cout << "Maximum value: " << maxHeap.getMax() << endl;
-    
+    // cout << "Maximum value: " << maxHeap.getMax() << endl;
+    while (!maxHeap.isEmpty())
+        cout << maxHeap.extractMax() << ' ';
+    cout << endl;
     return 0;
 }

@@ -94,13 +94,18 @@ int main() {
     minHeap.insert(5);
     minHeap.insert(4);
     minHeap.insert(45);
+    minHeap.insert(25);
+    minHeap.insert(12);
+    minHeap.insert(9);
 
     minHeap.printHeap();
 
-    cout << "Extracted min: " << minHeap.extractMin() << endl;
-    minHeap.printHeap();
+    // cout << "Extracted min: " << minHeap.extractMin() << endl;
+    // minHeap.printHeap();
 
-    cout << "Minimum value: " << minHeap.getMin() << endl;
-    
+    // cout << "Minimum value: " << minHeap.getMin() << endl;
+    while (!minHeap.isEmpty())
+        cout << minHeap.extractMin() << ' ';
+    cout << endl;
     return 0;
 }
