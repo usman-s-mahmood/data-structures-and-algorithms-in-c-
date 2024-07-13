@@ -15,7 +15,7 @@ class Heap
         Heap();
         Heap(int);
         virtual void insert(T) = 0;
-        virtual bool remove(T) = 0;
+        virtual T remove() = 0;
         virtual bool search(T) = 0;
         virtual T peek() = 0;
         virtual void display() = 0;
@@ -42,7 +42,5 @@ Heap<T>::Heap(int capacity)
 template <class T>
 Heap<T>::~Heap()
 {
-    for (int i = 0; i < capacity; i++)
-        delete this->arr[i];
     delete [] this->arr;
 }

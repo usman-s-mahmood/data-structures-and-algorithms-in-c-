@@ -16,6 +16,9 @@ class BinarySearchTree: public Tree<T>
         void pre_order_array(struct Node<T> *root, T *arr, int &itr);
         void convert_to_array_pre_order(struct Node<T> *root, T *arr, int &itr);
         void convert_to_array_post_order(struct Node<T> *root, T *arr, int &itr);
+        bool isValidBSTUtil(Node<T> *root, T, T);
+        int checkHeight(struct Node<T> *root);
+        int heightPro(struct Node<T> *root);
     public:
         BinarySearchTree();
         void insert(T);
@@ -34,6 +37,10 @@ class BinarySearchTree: public Tree<T>
         int size_of_tree();
         void compare_pre_order_array(T *arr);
         void identical_trees(BinarySearchTree<T>, BinarySearchTree<T>);
+        bool isValidBST();
+        int distanceBetweenNodes(T n1, T n2); 
+        bool isBalanced();
+        int height();
         ~BinarySearchTree(){}
 };
 
@@ -607,4 +614,102 @@ int findDistance(Node<T> *root, int n1, int n2)
     }
  
     return -1;
+}
+
+template <class T>
+bool BinarySearchTree<T>::isValidBSTUtil(Node<T> *root, T minValue, T maxValue)
+{
+    if (root == nullptr)
+        return true;
+    if (root->data <= minValue || root->data >= maxValue)
+        return false;
+    return isValidBSTUtil(root->left, minValue, root->data) && isValidBSTUtil(root->right, root->data, maxValue);
+}
+
+template <class T>
+bool BinarySearchTree<T>::isValidBST()
+{
+    if (!isEmpty())
+    {
+
+        bool check = isValidBSTUtil(this->root, T(), T());
+        if (check)
+        {
+            cout << "Tree is a valid Binary Search Tree" << endl;
+            return true;
+        }
+        cout << "Tree is a valid Binary Search Tree" << endl;
+        return false;
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return false;
+}
+
+template <class T>
+int BinarySearchTree<T>::distanceBetweenNodes(T n1, T n2) 
+{
+    if (!isEmpty())
+    {
+        int dist = int();
+        dist = findDistance(this->root, n1, n2);
+        cout << "Distance between " << n1 << " and " << n2 << " is: " << dist << endl;
+        return dist;
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return -1;
+}
+
+template <class T>
+int BinarySearchTree<T>::checkHeight(struct Node<T> *root) 
+{
+    if (root == nullptr) return 0;
+    int leftHeight = checkHeight(root->left);
+    if (leftHeight == -1) return -1;
+    int rightHeight = checkHeight(root->right);
+    if (rightHeight == -1) return -1;
+
+    int heightDiff = abs(leftHeight - rightHeight);
+    if (heightDiff > 1) {
+        return -1;
+    } else {
+        return max(leftHeight, rightHeight) + 1;
+    }
+}
+
+template <class T>
+bool BinarySearchTree<T>::isBalanced() 
+{
+    if (!isEmpty())
+    {
+        if (checkHeight(this->root) != -1)
+        {
+            cout << "Tree is Balanced!" << endl;
+            return true;
+        }
+        cout << "Not a balanced tree!" << endl;
+        return false;
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return false;
+}
+
+template <class T>
+int BinarySearchTree<T>::heightPro(struct Node<T> *root) 
+{
+    if (root == nullptr) return 0;
+    int leftHeight = heightPro(root->left);
+    int rightHeight = heightPro(root->right);
+    return max(leftHeight, rightHeight) + 1;
+}
+
+template <class T>
+int BinarySearchTree<T>::height() 
+{
+    if (!isEmpty()) {
+        int h = heightPro(this->root);
+        cout << "Height of the tree is: " << h << endl;
+        return h;
+    }
+    cout << "Invalid Operation! Tree is empty" << endl;
+    return 0;
 }
