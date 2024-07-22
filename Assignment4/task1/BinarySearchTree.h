@@ -41,6 +41,7 @@ class BinarySearchTree: public Tree<T>
         int distanceBetweenNodes(T n1, T n2); 
         bool isBalanced();
         int height();
+        void returnArray(T *arr, int size);
         ~BinarySearchTree(){}
 };
 
@@ -712,4 +713,27 @@ int BinarySearchTree<T>::height()
     }
     cout << "Invalid Operation! Tree is empty" << endl;
     return 0;
+}
+
+template <class T>
+void BinarySearchTree<T>::returnArray(T *arr, int size)
+{
+    if (!isEmpty())
+    {
+        int s = 0;
+        s = this->size_of_tree();
+        if (s == size)
+        {
+            T d_arr[s] = {T()};
+            int itr = 0;
+            convert_to_array(this->root, d_arr, itr);
+            for (int i = 0; i < s; i++)
+                arr[i] = d_arr[i];
+            cout << "Array is ready to be used!" << endl;
+            return ;
+        }
+        cout << "Size of given array does not match the tree size!" << endl;
+        return ;
+    }
+    cout << "Invalid Operation! Tree is Empty" << endl;
 }
