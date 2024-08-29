@@ -264,8 +264,78 @@ bool BinarySearchTree<T>::deleteNode(T value)
     {
         if (search(value))
         {
+            struct Node<T> *parent = this->root,
+                *child = this->root;
+            while (child->data != value)
+            {
+                parent = child;
+                if (value > child->data)
+                    child = child->right;
+                else
+                    child = child->left;
+            }
+            cout << "Value of Child: " << child->data << endl
+                << "Value of Parent: " << parent->data
+            << endl;
             // leaf node case
+            if (child->left == nullptr && child->right == nullptr)
+            {
+                if (parent->left == nullptr)
+                {
+                    delete child;
+                    child = nullptr;
+                    parent->right = nullptr;
+                }
+                else
+                {
+                    delete child;
+                    child = nullptr;
+                    parent->left = nullptr;
+                }
+                cout << "Value Deleted from the tree! Value was of a leaf node" << endl;
+                return true;
+            }
             // node with one child case
+            if (child->left == nullptr && child->right != nullptr)
+            {
+                struct Node<T> *temp = child;
+                if (parent->right->data == value)
+                {
+                    parent->right = temp->right;
+                    delete child;
+                    child = nullptr;
+                }
+                else
+                {
+                    parent->left = temp->right;
+                    delete child;
+                    child = nullptr;
+                }
+                cout << "Single child node is deleted!" << endl;
+                return true;
+            }
+            else if (child->right == nullptr && child->left != nullptr)
+            {
+                if (parent->right->data == value)
+                {
+                    parent->right = child->left;
+                    delete child;
+                    child = nullptr;
+                }
+                else
+                {
+                    parent->left = child->left;
+                    delete child;
+                    child = nullptr;
+                }
+                cout << "Single child node is deleted!" << endl;
+                return true;
+            }
+            else if (child->left != nullptr && child->right != nullptr)
+            {
+
+            }  
+        
             // node with two children case
             // root node case
         }
